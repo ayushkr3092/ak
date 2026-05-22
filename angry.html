@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>😤 Ummm... Excuse Me?! 😤</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 30% 10%, #2d1a1a, #3d2323, #1a0f0f);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .float-item {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            animation: floatUp 14s infinite linear;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-20vh) rotate(15deg); opacity: 0; }
+        }
+
+        .angry-card {
+            position: relative;
+            z-index: 20;
+            max-width: 550px;
+            width: 90%;
+            background: rgba(255, 240, 240, 0.96);
+            backdrop-filter: blur(20px);
+            border-radius: 70px;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.25), 0 0 0 3px #ffaaaa;
+            animation: angryGlow 1.5s infinite alternate;
+        }
+        @keyframes angryGlow {
+            0% { box-shadow: 0 15px 30px rgba(200,60,50,0.2), 0 0 0 3px #ffc0c0; }
+            100% { box-shadow: 0 25px 45px rgba(231,76,60,0.5), 0 0 0 6px #e74c3c; }
+        }
+
+        .angry-icon {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            animation: shakeAngry 0.3s infinite;
+        }
+        @keyframes shakeAngry {
+            0%,100%{ transform:translateX(0); }
+            25%{ transform:translateX(-5px); }
+            75%{ transform:translateX(5px); }
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #c0392b;
+            margin: 0.5rem 0;
+        }
+
+        .angry-message {
+            font-size: 1.1rem;
+            background: rgba(231,76,60,0.15);
+            border-radius: 50px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #a82313;
+            font-weight: 500;
+        }
+
+        .funny-text {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* ============================================================= */
+        /* 🔽🔽🔽  PASTE YOUR GIF URL IN THE `src` BELOW  🔽🔽🔽 */
+        .angry-gif {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 40px;
+            margin: 1rem auto;
+            display: block;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        /* 🔼🔼🔼  REPLACE THE `src` WITH YOUR OWN GIF LINK 🔼🔼🔼 */
+        /* ============================================================= */
+
+        .try-again-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: none;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .try-again-btn:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+
+        footer {
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b28c9e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-bg" id="floatingBg"></div>
+
+<div class="angry-card">
+    <div class="angry-icon">😤😡🤬</div>
+    <h2>Ummmm... Excuse Me?!</h2>
+    <div class="angry-message">
+        You forgot my birthday?! 😤<br>
+        Wow... just wow. 😒<br>
+        <span class="funny-text">(It's okay, but now you owe me a momos plate 🍜)</span>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- 🔽🔽🔽  PASTE YOUR GIF URL HERE (replace the src) 🔽🔽🔽 -->
+    <img class="angry-gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG9qMW9pMHl0a21nYWtuN3hkb25yMnFjcWw5NGFsd2hwcWlrZzJzbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SbPjDQXm5n9BgrUzWL/giphy.gif" alt="Funny angry GIF">
+    <!-- 🔼🔼🔼  PUT YOUR OWN GIF LINK ABOVE 🔼🔼🔼 -->
+    <!-- ========================================================= -->
+
+    <div class="funny-text" style="margin-top: 0.5rem;">👉 Go back and try again. Use DDMM format (e.g., 1206 for 12th June)</div>
+
+    <a href="gatekeeper.html" class="try-again-btn">
+        <i class="fas fa-arrow-left"></i> Try Again
+    </a>
+    <footer>💜 I'll forgive you... this once 💜</footer>
+</div>
+
+<script>
+    // floating angry emojis
+    const bg = document.getElementById('floatingBg');
+    const icons = ['😤', '😡', '🤬', '💢', '💥', '👎', '😒', '😩'];
+    for (let i = 0; i < 120; i++) {
+        let el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (Math.random() * 28 + 16) + 'px';
+        el.style.animationDuration = (Math.random() * 16 + 6) + 's';
+        el.style.animationDelay = Math.random() * 12 + 's';
+        bg.appendChild(el);
+    }
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</body>
+</html>

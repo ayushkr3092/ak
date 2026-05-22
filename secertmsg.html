@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>🔐 Secret Voice Message for You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 30% 10%, #1e0f2e, #2d1b3a, #0e0717);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .float-item {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.4;
+            animation: floatUp 14s infinite linear;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-20vh) rotate(15deg); opacity: 0; }
+        }
+
+        .split-layout {
+            position: relative;
+            z-index: 20;
+            max-width: 1100px;
+            width: 90%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gif-area {
+            flex: 1;
+            background: rgba(255, 245, 250, 0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 70px;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2), 0 0 0 3px rgba(232,67,147,0.4);
+            animation: charGlow 2s infinite alternate;
+        }
+        @keyframes charGlow {
+            0% { box-shadow: 0 10px 25px rgba(156,80,140,0.2), 0 0 0 3px #ffd5ea; }
+            100% { box-shadow: 0 25px 40px rgba(200,100,180,0.4), 0 0 0 6px #e84393; }
+        }
+
+        .crazy-gif {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 50px;
+            display: block;
+            margin: 0 auto 1.5rem;
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.2));
+            animation: bounce 0.8s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        .gif-area p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: #e84393;
+            margin-top: 1rem;
+        }
+
+        .passcode-card {
+            flex: 1;
+            background: rgba(255, 248, 250, 0.96);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.25), 0 0 0 3px rgba(255,200,230,0.8);
+            animation: cardGlow 2s infinite alternate;
+        }
+        @keyframes cardGlow {
+            0% { box-shadow: 0 15px 30px rgba(156,80,140,0.2), 0 0 0 3px #ffd5ea; }
+            100% { box-shadow: 0 25px 45px rgba(200,100,180,0.5), 0 0 0 6px #e84393; }
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            animation: lockPulse 1.5s infinite;
+        }
+        @keyframes lockPulse {
+            0%,100%{ transform:scale(1); }
+            50%{ transform:scale(1.05); }
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #b85783;
+            margin: 0.5rem 0;
+        }
+
+        .instruction {
+            font-size: 0.85rem;
+            color: #4a2e3f;
+            margin-bottom: 1rem;
+        }
+
+        .passcode-input {
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto 1rem;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 4px;
+            background: #fff0f7;
+            border: 2px solid #e84393;
+            border-radius: 60px;
+            outline: none;
+            font-weight: bold;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 200px;
+            margin: 0.8rem auto;
+        }
+        .key {
+            background: rgba(232,67,147,0.15);
+            border: none;
+            padding: 8px;
+            font-size: 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #e84393;
+            font-weight: bold;
+        }
+        .key:active { transform: scale(0.95); }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #e84393, #ab74c2);
+            border: none;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: 0.2s;
+        }
+        .submit-btn:hover { transform: translateY(-2px); }
+
+        .error-msg {
+            color: #e74c3c;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .secret-area {
+            margin-top: 1rem;
+            border-top: 2px dashed #e84393;
+            padding-top: 1rem;
+            display: none;
+            animation: fadeInUp 0.5s;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .voice-message {
+            background: rgba(232,67,147,0.1);
+            border-radius: 40px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        .voice-message p {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: #3a1e2e;
+        }
+        audio {
+            width: 100%;
+            border-radius: 50px;
+            margin-top: 0.5rem;
+        }
+        .emotional-note {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1rem;
+            color: #e84393;
+            margin-top: 0.8rem;
+        }
+        .fallback-note {
+            font-size: 0.7rem;
+            color: #b85783;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 800px) {
+            .split-layout { flex-direction: column; }
+            .gif-area, .passcode-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-bg" id="floatingBg"></div>
+
+<div class="split-layout">
+    <div class="gif-area">
+        <img class="crazy-gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHJxeWkwaGtmdG9jZnJpZTd6eDVvY2JzZmF4bXA2NXpjbm93N3ZtNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5XRB3Ay93FZw4/giphy.gif" alt="Crazy dancing GIF">
+        <p>🤪 Crack the code to hear a special voice message 🤪</p>
+    </div>
+
+    <div class="passcode-card">
+        <div class="lock-icon">🔒💜</div>
+        <h2>Secret Voice Message</h2>
+        <div class="instruction">Enter the passcode to hear something from my heart</div>
+
+        <div class="passcode-input">
+            <input type="password" id="passcodeInput" maxlength="6" placeholder="******" inputmode="numeric">
+        </div>
+
+        <div class="keypad" id="keypad">
+            <button class="key" data-digit="1">1</button><button class="key" data-digit="2">2</button><button class="key" data-digit="3">3</button>
+            <button class="key" data-digit="4">4</button><button class="key" data-digit="5">5</button><button class="key" data-digit="6">6</button>
+            <button class="key" data-digit="7">7</button><button class="key" data-digit="8">8</button><button class="key" data-digit="9">9</button>
+            <button class="key" data-digit="0">0</button>
+            <button class="key key-delete" data-digit="del">⌫</button>
+            <button class="key key-delete" data-digit="clear">C</button>
+        </div>
+
+        <button id="unlockBtn" class="submit-btn"><i class="fas fa-key"></i> Unlock</button>
+        <div id="errorMsg" class="error-msg">❌ Wrong code. Try again!</div>
+
+        <div id="secretArea" class="secret-area">
+            <div class="voice-message">
+                <p>💜 <strong>A message from my heart</strong> 💜</p>
+                <p>I recorded this just for you. Click play when you're ready.</p>
+                <!-- Audio element WITHOUT autoplay, so user must click play -->
+                <audio controls id="secretAudio">
+                    <source src="Recording (2).m4a" type="audio/mpeg">
+                    Your browser doesn't support audio.
+                </audio>
+                <div class="emotional-note">
+                    ✨ You mean a lot to me. Thank you for being you. ✨
+                </div>
+                <div class="fallback-note">
+                    🎧 If you don't hear anything, make sure the file "your-secret-voice.mp3" is in the same folder.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // floating background
+    const bg = document.getElementById('floatingBg');
+    const icons = ['🎈', '🎉', '💜', '✨', '⭐', '🌸', '🎀', '🎂', '🦋', '🔒', '💖', '🤪'];
+    for (let i = 0; i < 150; i++) {
+        let el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (Math.random() * 32 + 16) + 'px';
+        el.style.animationDuration = (Math.random() * 16 + 6) + 's';
+        el.style.animationDelay = Math.random() * 14 + 's';
+        bg.appendChild(el);
+    }
+
+    // ----- SET YOUR SECRET PASSCODE HERE -----
+    const SECRET_CODE = "0906";  // change this to any number you like
+    // -----------------------------------------
+
+    const passInput = document.getElementById('passcodeInput');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const secretArea = document.getElementById('secretArea');
+
+    // keypad
+    const keypad = document.getElementById('keypad');
+    keypad.addEventListener('click', (e) => {
+        const btn = e.target.closest('.key');
+        if (!btn) return;
+        const digit = btn.getAttribute('data-digit');
+        if (digit === 'del') {
+            passInput.value = passInput.value.slice(0, -1);
+        } else if (digit === 'clear') {
+            passInput.value = '';
+        } else {
+            passInput.value += digit;
+        }
+    });
+
+    function checkCode() {
+        if (passInput.value === SECRET_CODE) {
+            secretArea.style.display = 'block';
+            errorMsg.style.display = 'none';
+            burstConfetti();
+            unlockBtn.disabled = true;
+            passInput.disabled = true;
+            document.querySelectorAll('.key').forEach(btn => btn.style.opacity = '0.5');
+            // Do NOT autoplay – user must press play on the audio element
+        } else {
+            errorMsg.style.display = 'block';
+            passInput.value = '';
+            passInput.classList.add('shake');
+            setTimeout(() => passInput.classList.remove('shake'), 300);
+        }
+    }
+
+    unlockBtn.addEventListener('click', checkCode);
+    passInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkCode(); });
+
+    // shake animation
+    const styleShake = document.createElement('style');
+    styleShake.textContent = `
+        .shake { animation: shakeAnim 0.2s ease-in-out 0s 2; }
+        @keyframes shakeAnim {
+            0%,100%{ transform:translateX(0); }
+            25%{ transform:translateX(-5px); }
+            75%{ transform:translateX(5px); }
+        }
+    `;
+    document.head.appendChild(styleShake);
+
+    function burstConfetti() {
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '9999';
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        for (let i = 0; i < 220; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                size: Math.random() * 8 + 3,
+                color: `hsl(${Math.random() * 70 + 280}, 85%, 65%)`,
+                speedY: Math.random() * 8 + 4,
+                speedX: (Math.random() - 0.5) * 4
+            });
+        }
+        let anim;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let p of particles) {
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, p.size, p.size / 1.5);
+                p.y += p.speedY;
+                p.x += p.speedX;
+                if (p.y > canvas.height + 50) p.y = -30;
+            }
+            anim = requestAnimationFrame(draw);
+        }
+        draw();
+        setTimeout(() => { cancelAnimationFrame(anim); canvas.remove(); }, 3000);
+    }
+
+    setTimeout(() => burstConfetti(), 400);
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</body>
+</html>

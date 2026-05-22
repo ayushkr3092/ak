@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🔒 Birthday Gate | Next‑Level Magic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 30% 10%, #1e0f2e, #2d1b3a, #0e0717);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem;
+            animation: bgPulse 8s infinite alternate;
+        }
+        @keyframes bgPulse {
+            0% { background: radial-gradient(circle at 30% 10%, #1e0f2e, #2d1b3a, #0e0717); }
+            100% { background: radial-gradient(circle at 70% 90%, #2a1540, #3a1f4a, #1c1030); }
+        }
+
+        /* floating background with PARALLAX effect */
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .float-item {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: floatUpParallax 14s infinite cubic-bezier(0.2, 0.8, 0.4, 1);
+            will-change: transform;
+        }
+        @keyframes floatUpParallax {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.6; }
+            85% { opacity: 0.5; }
+            100% { transform: translateY(-20vh) rotate(15deg); opacity: 0; }
+        }
+
+        /* main card */
+        .gate-card {
+            position: relative;
+            z-index: 20;
+            max-width: 500px;
+            width: 90%;
+            background: rgba(255, 248, 250, 0.96);
+            backdrop-filter: blur(20px);
+            border-radius: 70px;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.25), 0 0 0 3px rgba(255,200,230,0.8);
+            animation: cardEnter 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), cardGlow 2s infinite alternate;
+            transform-origin: center;
+        }
+        @keyframes cardEnter {
+            0% { opacity: 0; transform: scale(0.9) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes cardGlow {
+            0% { box-shadow: 0 15px 30px rgba(156,80,140,0.2), 0 0 0 3px #ffd5ea; }
+            100% { box-shadow: 0 35px 55px rgba(200,100,180,0.6), 0 0 0 6px #e84393; }
+        }
+
+        /* lock section */
+        .lock-icon {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            animation: lockSwing 2s infinite ease-in-out, lockPulse 1.5s infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 8px #ffb7d2);
+        }
+        @keyframes lockSwing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        @keyframes lockPulse {
+            0%,100%{ transform: scale(1); text-shadow:0 0 0px #e84393; }
+            50%{ transform: scale(1.08); text-shadow:0 0 20px #e84393; }
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #b85783;
+            margin: 0.5rem 0;
+            animation: titleFloat 3s infinite alternate;
+        }
+        @keyframes titleFloat {
+            0% { transform: translateY(0px); letter-spacing: 0px; }
+            100% { transform: translateY(-3px); letter-spacing: 1px; }
+        }
+
+        .instruction {
+            font-size: 0.9rem;
+            color: #4a2e3f;
+            margin-bottom: 1.5rem;
+            animation: fadeInOut 3s infinite;
+        }
+        @keyframes fadeInOut {
+            0%,100%{ opacity: 0.7; }
+            50%{ opacity: 1; text-shadow:0 0 2px #e84393; }
+        }
+
+        /* input field */
+        .passcode-input {
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto 1rem;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 4px;
+            background: #fff0f7;
+            border: 2px solid #e84393;
+            border-radius: 60px;
+            outline: none;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        input:focus {
+            border-color: #ff6bcb;
+            box-shadow: 0 0 0 5px rgba(232,67,147,0.3);
+            transform: scale(1.02);
+        }
+
+        /* keypad buttons with ripple & bounce */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 220px;
+            margin: 1rem auto;
+        }
+        .key {
+            background: rgba(232,67,147,0.15);
+            border: none;
+            padding: 10px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            color: #e84393;
+            font-weight: bold;
+            transition: 0.1s linear;
+            position: relative;
+            overflow: hidden;
+        }
+        .key::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.7) 10%, transparent 80%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s;
+            pointer-events: none;
+        }
+        .key:active::after {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+        }
+        .key:active {
+            transform: scale(0.92);
+            background: rgba(232,67,147,0.3);
+        }
+
+        /* submit button with shine */
+        .submit-btn {
+            background: linear-gradient(135deg, #e84393, #ab74c2);
+            border: none;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(232,67,147,0.5);
+        }
+
+        /* error shake animation (for wrong code before redirect) */
+        .shake {
+            animation: shakeError 0.3s ease-in-out 0s 2;
+        }
+        @keyframes shakeError {
+            0%,100%{ transform: translateX(0); }
+            25%{ transform: translateX(-5px); }
+            75%{ transform: translateX(5px); }
+        }
+
+        footer {
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b28c9e;
+            animation: subtlePulse 2s infinite;
+        }
+        @keyframes subtlePulse {
+            0%,100%{ opacity: 0.6; }
+            50%{ opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-bg" id="floatingBg"></div>
+
+<div class="gate-card">
+    <div class="lock-icon">🔒🎂</div>
+    <h2>Birthday Gate</h2>
+    <div class="instruction">✨ Enter my birthday to unlock the magic ✨</div>
+
+    <div class="passcode-input">
+        <input type="password" id="passInput" maxlength="4" placeholder="DDMM" inputmode="numeric">
+    </div>
+
+    <div class="keypad" id="keypad">
+        <button class="key" data-digit="1">1</button><button class="key" data-digit="2">2</button><button class="key" data-digit="3">3</button>
+        <button class="key" data-digit="4">4</button><button class="key" data-digit="5">5</button><button class="key" data-digit="6">6</button>
+        <button class="key" data-digit="7">7</button><button class="key" data-digit="8">8</button><button class="key" data-digit="9">9</button>
+        <button class="key" data-digit="0">0</button>
+        <button class="key key-delete" data-digit="del">⌫</button>
+        <button class="key key-delete" data-digit="clear">C</button>
+    </div>
+
+    <button id="enterBtn" class="submit-btn"><i class="fas fa-key"></i> Unlock Portal</button>
+
+    <footer>💜 Only those who know my birthday can enter 💜</footer>
+</div>
+
+<script>
+    // ---------- SET YOUR BIRTHDAY PASSCODE HERE (DDMM) ----------
+    const CORRECT_CODE = "0812";   // 8th December
+    // ------------------------------------------------------------
+
+    const passInput = document.getElementById('passInput');
+    const enterBtn = document.getElementById('enterBtn');
+
+    // keypad logic
+    const keypad = document.getElementById('keypad');
+    keypad.addEventListener('click', (e) => {
+        const btn = e.target.closest('.key');
+        if (!btn) return;
+        const digit = btn.getAttribute('data-digit');
+        if (digit === 'del') {
+            passInput.value = passInput.value.slice(0, -1);
+        } else if (digit === 'clear') {
+            passInput.value = '';
+        } else {
+            if (passInput.value.length < 4) passInput.value += digit;
+        }
+        // add a little haptic feedback (optional)
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { btn.style.transform = ''; }, 100);
+    });
+
+    function checkPass() {
+        const entered = passInput.value.trim();
+        if (entered === CORRECT_CODE) {
+            // correct – add a happy flash then redirect
+            document.body.style.animation = 'none';
+            document.body.style.backgroundColor = '#4a1a6e';
+            setTimeout(() => { window.location.href = "gatekeeper.html"; }, 200);
+        } else {
+            // wrong – shake and then redirect to angry page
+            passInput.classList.add('shake');
+            // also pulse the lock icon angrily
+            const lock = document.querySelector('.lock-icon');
+            lock.style.animation = 'none';
+            lock.style.transform = 'rotate(10deg)';
+            setTimeout(() => { lock.style.animation = ''; }, 500);
+            setTimeout(() => {
+                window.location.href = "angry.html";
+            }, 400);
+        }
+    }
+
+    enterBtn.addEventListener('click', checkPass);
+    passInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPass(); });
+
+    // ========== ENHANCED FLOATING BACKGROUND (with depth) ==========
+    const bg = document.getElementById('floatingBg');
+    const icons = ['🔒', '🎂', '💜', '✨', '⭐', '🎈', '🎉', '🌸', '🦋', '🌟', '🎀'];
+    for (let i = 0; i < 180; i++) {
+        let el = document.createElement('div');
+        el.classList.add('float-item');
+        el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (Math.random() * 32 + 16) + 'px';
+        el.style.animationDuration = (Math.random() * 18 + 8) + 's';
+        el.style.animationDelay = Math.random() * 15 + 's';
+        // random horizontal drift
+        el.style.setProperty('--drift', Math.random() * 30 - 15 + 'px');
+        bg.appendChild(el);
+    }
+
+    // extra tiny particle stars (micro animations)
+    const starCanvas = document.createElement('canvas');
+    starCanvas.style.position = 'fixed';
+    starCanvas.style.top = '0';
+    starCanvas.style.left = '0';
+    starCanvas.style.width = '100%';
+    starCanvas.style.height = '100%';
+    starCanvas.style.pointerEvents = 'none';
+    starCanvas.style.zIndex = '3';
+    document.body.appendChild(starCanvas);
+    const ctx = starCanvas.getContext('2d');
+    let stars = [];
+    function resizeStars() {
+        starCanvas.width = window.innerWidth;
+        starCanvas.height = window.innerHeight;
+        stars = [];
+        for (let i = 0; i < 200; i++) {
+            stars.push({
+                x: Math.random() * starCanvas.width,
+                y: Math.random() * starCanvas.height,
+                r: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.5,
+                speed: Math.random() * 0.3 + 0.1
+            });
+        }
+    }
+    function drawStars() {
+        ctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+        for (let s of stars) {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 220, 240, ${s.alpha * 0.6})`;
+            ctx.fill();
+            s.y -= s.speed;
+            if (s.y < 0) s.y = starCanvas.height;
+        }
+        requestAnimationFrame(drawStars);
+    }
+    window.addEventListener('resize', () => { resizeStars(); });
+    resizeStars();
+    drawStars();
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</body>
+</html>

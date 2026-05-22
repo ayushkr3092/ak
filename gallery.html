@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Birthday Video | Tap for Sound</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #000;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        video {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            pointer-events: none; /* so the click goes to the container */
+        }
+
+        .next-btn {
+            position: fixed;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            background: linear-gradient(135deg, #e84393, #ab74c2);
+            border: none;
+            padding: 14px 38px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Poppins', system-ui, sans-serif;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            animation: btnPulse 1.8s infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes btnPulse {
+            0% { transform: translateX(-50%) scale(1); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+            50% { transform: translateX(-50%) scale(1.03); box-shadow: 0 12px 35px rgba(232,67,147,0.6); }
+            100% { transform: translateX(-50%) scale(1); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        }
+
+        .next-btn:hover {
+            transform: translateX(-50%) translateY(-5px);
+            background: linear-gradient(135deg, #ff6bcb, #c864e0);
+        }
+
+        /* sound instruction overlay (disappears after 5 seconds) */
+        .sound-overlay {
+            position: fixed;
+            bottom: 18%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 15;
+            pointer-events: none;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+            animation: fadeOut 5s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        /* floating hearts */
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .float-item {
+            position: absolute;
+            font-size: 1rem;
+            opacity: 0.15;
+            animation: floatUp 18s infinite linear;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(-20vh) rotate(10deg); opacity: 0; }
+        }
+
+        @media (max-width: 700px) {
+            .next-btn { padding: 10px 28px; font-size: 1rem; bottom: 6%; }
+            .sound-overlay { bottom: 16%; font-size: 0.7rem; white-space: nowrap; }
+        }
+        @media (max-width: 480px) {
+            .next-btn { padding: 8px 24px; font-size: 0.9rem; bottom: 5%; }
+            .sound-overlay { bottom: 15%; font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container" id="videoContainer">
+    <video id="birthdayVideo" autoplay loop muted playsinline>
+        <source src="Video Project.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<div class="sound-overlay">🎵 Tap anywhere on the video to enable sound 🎵</div>
+<div class="floating-bg" id="floatingBg"></div>
+
+<a href="18th-birthday.html" class="next-btn">Next → 💜</a>
+
+<script>
+    const video = document.getElementById('birthdayVideo');
+    const container = document.getElementById('videoContainer');
+    let soundEnabled = false;
+
+    // Ensure autoplay (muted)
+    if (video) {
+        video.play().catch(e => console.log("autoplay failed", e));
+    }
+
+    // One tap on the video container → unmute
+    container.addEventListener('click', () => {
+        if (!soundEnabled) {
+            video.muted = false;
+            soundEnabled = true;
+            // optionally remove the overlay gracefully
+            const overlay = document.querySelector('.sound-overlay');
+            if (overlay) overlay.style.opacity = '0';
+        }
+    });
+
+    // Floating hearts
+    const bg = document.getElementById('floatingBg');
+    if (bg) {
+        const icons = ['💜', '✨', '⭐'];
+        for (let i = 0; i < 40; i++) {
+            let el = document.createElement('div');
+            el.classList.add('float-item');
+            el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            el.style.animationDuration = (Math.random() * 18 + 8) + 's';
+            el.style.animationDelay = Math.random() * 12 + 's';
+            bg.appendChild(el);
+        }
+    }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+</body>
+</html>

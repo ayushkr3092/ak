@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎀 Are You Ready? 🎀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ready page specific styles - FULL CENTERING */
+        .ready-container {
+            max-width: 650px;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .teddy-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            width: 100%;
+        }
+        
+        .teddy-gif {
+            width: 220px;
+            max-width: 80%;
+            height: auto;
+            border-radius: 50px;
+            box-shadow: 0 15px 30px rgba(156, 80, 140, 0.3);
+            animation: bounce 2s infinite;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        .question {
+            font-size: 2rem;
+            font-family: 'Dancing Script', cursive;
+            color: #b85783;
+            margin: 1rem 0 1.5rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .choice-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 1rem 0 1.5rem;
+            width: 100%;
+        }
+        
+        .yes-btn, .no-btn {
+            padding: 14px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .yes-btn {
+            background: linear-gradient(135deg, #cd8ab0, #ab74c2);
+            color: white;
+        }
+        
+        .no-btn {
+            background: #f0e0f0;
+            color: #8c6280;
+            border: 2px solid #d4a0c0;
+        }
+        
+        .yes-btn:hover, .no-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(160, 90, 140, 0.4);
+        }
+        
+        .yes-btn:active, .no-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 550px) {
+            .question {
+                font-size: 1.5rem;
+            }
+            .yes-btn, .no-btn {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
+            .teddy-gif {
+                width: 160px;
+            }
+            .choice-buttons {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg" id="floatingBg"></div>
+    <div class="ready-container">
+        <h1>💜 A Special Surprise Awaits 💜</h1>
+        
+        <div class="teddy-wrapper">
+            <img class="teddy-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWNmMXp2N21nZHZlNnJ6cm4zdXhvYXF4MGRoOW9wejNjZjZudzY3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/4YZ1GEwkOhFBGu2LM3/giphy.gif" alt="Cute Teddy GIF">
+        </div>
+        
+        <div class="question">
+            ✨ Are you ready for the surprise? ✨
+        </div>
+        
+        <div class="choice-buttons">
+            <a href="gallery.html" class="yes-btn">
+                <i class="fas fa-check-circle"></i> Yes! 💜
+            </a>
+            <a href="no.html" class="no-btn">
+                <i class="fas fa-heart-broken"></i> Not yet...
+            </a>
+        </div>
+        
+        <footer>💜 Whatever you choose, you're loved 💜</footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

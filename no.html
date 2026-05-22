@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>😤 HOW DARE YOU?! | Birthday Drama 😤</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .no-container {
+            max-width: 650px;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .drama-teddy {
+            width: 220px;
+            max-width: 75%;
+            animation: dramaticShake 0.4s infinite;
+            margin: 1rem 0;
+            border-radius: 50px;
+        }
+        
+        @keyframes dramaticShake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-8px) rotate(-5deg); }
+            75% { transform: translateX(8px) rotate(5deg); }
+        }
+        
+        .drama-header {
+            font-size: 3rem;
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(135deg, #e74c3c, #ff6b6b, #e74c3c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: pulseRed 1s infinite;
+        }
+        
+        @keyframes pulseRed {
+            0%, 100% { text-shadow: 0 0 5px #ff6b6b; }
+            50% { text-shadow: 0 0 20px #e74c3c; }
+        }
+        
+        .drama-text {
+            font-size: 1.1rem;
+            color: #c0392b;
+            background: rgba(255, 235, 235, 0.9);
+            padding: 1rem;
+            border-radius: 50px;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        
+        .anger-meter {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            font-family: monospace;
+            margin: 0.5rem 0;
+        }
+        
+        .go-back-btn {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .go-back-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.5);
+        }
+        
+        .warning {
+            font-size: 0.8rem;
+            color: #d35400;
+            margin-top: 0.5rem;
+            background: #fff3cd;
+            padding: 5px 12px;
+            border-radius: 30px;
+        }
+        
+        .small-note {
+            font-size: 0.7rem;
+            color: #aa7896;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 550px) {
+            .drama-header { font-size: 2rem; }
+            .drama-text { font-size: 0.9rem; }
+            .go-back-btn { padding: 10px 25px; font-size: 1rem; }
+            .drama-teddy { width: 150px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg" id="floatingBg"></div>
+    <div class="no-container">
+        <div class="drama-header">
+            😤 EXCUSE ME?! 😤
+        </div>
+        
+        <img class="drama-teddy" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjhoNTJseGV0Y2ltM254ZnRxZ2hxZzN2a3JtYnQ2aG5qaG45NHd5YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/eZjsVrbsoD1S9D3F1j/giphy.gif" alt="Angry Teddy">
+        
+        <div class="anger-meter">
+            🔥 DISAPPOINTMENT LEVEL: 1000% 🔥
+        </div>
+        
+        <div class="drama-text">
+            <i class="fas fa-bolt"></i> <strong>HOW DARE YOU SAY NO?!</strong> <i class="fas fa-bolt"></i><br>
+            You said <strong>"NO"</strong>?! To MY surprise?!<br>
+            I worked so hard on this for you! 😭<br>
+            <br>
+            <strong>THIS IS UNACCEPTABLE BEHAVIOR!</strong>
+        </div>
+        
+        <div class="warning">
+            ⚠️ 3 virtual kittens just fainted because of your "NO" ⚠️
+        </div>
+        
+        <a href="ready.html" class="go-back-btn">
+            <i class="fas fa-arrow-left"></i> Go Back and Say YES! 🔙
+        </a>
+        
+        <div class="small-note">
+            💜 (Seriously though... just click YES this time 😤) 💜
+        </div>
+        
+        <footer>💜 I still care about you... even when you make bad decisions 💜</footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
